@@ -1,0 +1,138 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="directorioModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="Contacto">
+    <Key>
+      <PropertyRef Name="id_contacto" />
+    </Key>
+    <Property Name="id_contacto" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="apellido" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="id_user" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Usuario" Relationship="Self.FK_Contacto_Usuario" FromRole="Contacto" ToRole="Usuario" />
+    <NavigationProperty Name="Telefono" Relationship="Self.FK_Telefono_Contacto" FromRole="Contacto" ToRole="Telefono" />
+    <Property Name="creation_dt" Type="DateTime" Precision="0" />
+    <Property Name="creation_time" Type="Time" Precision="7" />
+    <Property Name="telefono" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="Telefono">
+    <Key>
+      <PropertyRef Name="id_tel" />
+    </Key>
+    <Property Name="id_tel" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="telefono1" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="id_contacto" Type="Int32" />
+    <NavigationProperty Name="Contacto" Relationship="Self.FK_Telefono_Contacto" FromRole="Telefono" ToRole="Contacto" />
+  </EntityType>
+  <EntityType Name="Usuario">
+    <Key>
+      <PropertyRef Name="id_user" />
+    </Key>
+    <Property Name="id_user" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="username" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="password" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Contacto" Relationship="Self.FK_Contacto_Usuario" FromRole="Usuario" ToRole="Contacto" />
+    <Property Name="creation_dt" Type="DateTime" Precision="0" />
+    <Property Name="creation_time" Type="Time" Precision="7" />
+    <Property Name="update_dt" Type="DateTime" Precision="0" />
+    <Property Name="update_time" Type="Time" Precision="7" />
+  </EntityType>
+  <Association Name="FK_Contacto_Usuario">
+    <End Role="Usuario" Type="Self.Usuario" Multiplicity="1" />
+    <End Role="Contacto" Type="Self.Contacto" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Usuario">
+        <PropertyRef Name="id_user" />
+      </Principal>
+      <Dependent Role="Contacto">
+        <PropertyRef Name="id_user" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Telefono_Contacto">
+    <End Role="Contacto" Type="Self.Contacto" Multiplicity="0..1" />
+    <End Role="Telefono" Type="Self.Telefono" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Contacto">
+        <PropertyRef Name="id_contacto" />
+      </Principal>
+      <Dependent Role="Telefono">
+        <PropertyRef Name="id_contacto" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="directorio" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Contacto" EntityType="Self.Contacto" />
+    <EntitySet Name="Telefono" EntityType="Self.Telefono" />
+    <EntitySet Name="Usuario" EntityType="Self.Usuario" />
+    <AssociationSet Name="FK_Contacto_Usuario" Association="Self.FK_Contacto_Usuario">
+      <End Role="Usuario" EntitySet="Usuario" />
+      <End Role="Contacto" EntitySet="Contacto" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Telefono_Contacto" Association="Self.FK_Telefono_Contacto">
+      <End Role="Contacto" EntitySet="Contacto" />
+      <End Role="Telefono" EntitySet="Telefono" />
+    </AssociationSet>
+    <FunctionImport Name="AddUserr">
+      <Parameter Name="Usuario" Mode="In" Type="String" />
+      <Parameter Name="Password" Mode="In" Type="String" />
+      <Parameter Name="Patron" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="ValidarUser" ReturnType="Collection(directorioModel.ValidarUser_Result)">
+      <Parameter Name="Usuario" Mode="In" Type="String" />
+      <Parameter Name="Password" Mode="In" Type="String" />
+      <Parameter Name="Patron" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="contacto_crear">
+      <Parameter Name="Nombre" Mode="In" Type="String" />
+      <Parameter Name="Apellido" Mode="In" Type="String" />
+      <Parameter Name="Telefono" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="contacto_delete">
+      <Parameter Name="Id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="contacto_update">
+      <Parameter Name="Id" Mode="In" Type="Int32" />
+      <Parameter Name="Nombre" Mode="In" Type="String" />
+      <Parameter Name="Apellido" Mode="In" Type="String" />
+      <Parameter Name="Telefono" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="contactoload" ReturnType="Collection(directorioModel.contactoload_Result)" />
+    <FunctionImport Name="contacto_read" ReturnType="Collection(directorioModel.contacto_read_Result)" />
+    <FunctionImport Name="contactoread" ReturnType="Collection(directorioModel.contactoread_Result)">
+      <Parameter Name="Id" Mode="In" Type="Int32" />
+    </FunctionImport>
+  </EntityContainer>
+  <ComplexType Name="ValidarUser_Result">
+    <Property Type="Int32" Name="id_user" Nullable="false" />
+    <Property Type="String" Name="username" Nullable="true" MaxLength="50" />
+    <Property Type="String" Name="password" Nullable="true" MaxLength="500" />
+    <Property Type="DateTime" Name="creation_dt" Nullable="true" />
+    <Property Type="Time" Name="creation_time" Nullable="true" />
+    <Property Type="DateTime" Name="update_dt" Nullable="true" />
+    <Property Type="Time" Name="update_time" Nullable="true" />
+  </ComplexType>
+  <ComplexType Name="contactoload_Result">
+    <Property Type="Int32" Name="id_contacto" Nullable="false" />
+    <Property Type="String" Name="nombre" Nullable="true" MaxLength="50" />
+    <Property Type="String" Name="apellido" Nullable="true" MaxLength="50" />
+    <Property Type="Int32" Name="id_user" Nullable="false" />
+  </ComplexType>
+  <ComplexType Name="contacto_read_Result">
+    <Property Type="Int32" Name="id_contacto" Nullable="false" />
+    <Property Type="String" Name="nombre" Nullable="true" MaxLength="50" />
+    <Property Type="String" Name="apellido" Nullable="true" MaxLength="50" />
+    <Property Type="Int32" Name="id_user" Nullable="false" />
+    <Property Type="DateTime" Name="creation_dt" Nullable="true" />
+    <Property Type="Time" Name="creation_time" Nullable="true" />
+    <Property Type="String" Name="telefono" Nullable="true" MaxLength="50" />
+  </ComplexType>
+  <ComplexType Name="contactoread_Result">
+    <Property Type="Int32" Name="id_contacto" Nullable="false" />
+    <Property Type="String" Name="nombre" Nullable="true" MaxLength="50" />
+    <Property Type="String" Name="apellido" Nullable="true" MaxLength="50" />
+    <Property Type="Int32" Name="id_user" Nullable="false" />
+    <Property Type="DateTime" Name="creation_dt" Nullable="true" />
+    <Property Type="Time" Name="creation_time" Nullable="true" />
+    <Property Type="String" Name="telefono" Nullable="true" MaxLength="50" />
+  </ComplexType>
+</Schema>

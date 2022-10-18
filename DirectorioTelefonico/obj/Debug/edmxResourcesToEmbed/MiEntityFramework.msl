@@ -1,0 +1,93 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="directorioModelStoreContainer" CdmEntityContainer="directorio">
+    <EntitySetMapping Name="Contacto">
+      <EntityTypeMapping TypeName="directorioModel.Contacto">
+        <MappingFragment StoreEntitySet="Contacto">
+          <ScalarProperty Name="telefono" ColumnName="telefono" />
+          <ScalarProperty Name="creation_time" ColumnName="creation_time" />
+          <ScalarProperty Name="creation_dt" ColumnName="creation_dt" />
+          <ScalarProperty Name="id_contacto" ColumnName="id_contacto" />
+          <ScalarProperty Name="nombre" ColumnName="nombre" />
+          <ScalarProperty Name="apellido" ColumnName="apellido" />
+          <ScalarProperty Name="id_user" ColumnName="id_user" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Telefono">
+      <EntityTypeMapping TypeName="directorioModel.Telefono">
+        <MappingFragment StoreEntitySet="Telefono">
+          <ScalarProperty Name="id_tel" ColumnName="id_tel" />
+          <ScalarProperty Name="telefono1" ColumnName="telefono" />
+          <ScalarProperty Name="id_contacto" ColumnName="id_contacto" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Usuario">
+      <EntityTypeMapping TypeName="directorioModel.Usuario">
+        <MappingFragment StoreEntitySet="Usuario">
+          <ScalarProperty Name="update_time" ColumnName="update_time" />
+          <ScalarProperty Name="update_dt" ColumnName="update_dt" />
+          <ScalarProperty Name="creation_time" ColumnName="creation_time" />
+          <ScalarProperty Name="creation_dt" ColumnName="creation_dt" />
+          <ScalarProperty Name="id_user" ColumnName="id_user" />
+          <ScalarProperty Name="username" ColumnName="username" />
+          <ScalarProperty Name="password" ColumnName="password" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <FunctionImportMapping FunctionImportName="AddUserr" FunctionName="directorioModel.Store.AddUserr" />
+    <FunctionImportMapping FunctionImportName="ValidarUser" FunctionName="directorioModel.Store.ValidarUser">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="directorioModel.ValidarUser_Result">
+          <ScalarProperty Name="id_user" ColumnName="id_user" />
+          <ScalarProperty Name="username" ColumnName="username" />
+          <ScalarProperty Name="password" ColumnName="password" />
+          <ScalarProperty Name="creation_dt" ColumnName="creation_dt" />
+          <ScalarProperty Name="creation_time" ColumnName="creation_time" />
+          <ScalarProperty Name="update_dt" ColumnName="update_dt" />
+          <ScalarProperty Name="update_time" ColumnName="update_time" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="contacto_crear" FunctionName="directorioModel.Store.contacto_crear" />
+    <FunctionImportMapping FunctionImportName="contacto_delete" FunctionName="directorioModel.Store.contacto_delete" />
+    <FunctionImportMapping FunctionImportName="contacto_update" FunctionName="directorioModel.Store.contacto_update" />
+    <FunctionImportMapping FunctionImportName="contactoload" FunctionName="directorioModel.Store.contactoload">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="directorioModel.contactoload_Result">
+          <ScalarProperty Name="id_contacto" ColumnName="id_contacto" />
+          <ScalarProperty Name="nombre" ColumnName="nombre" />
+          <ScalarProperty Name="apellido" ColumnName="apellido" />
+          <ScalarProperty Name="id_user" ColumnName="id_user" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="contacto_read" FunctionName="directorioModel.Store.contacto_read">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="directorioModel.contacto_read_Result">
+          <ScalarProperty Name="id_contacto" ColumnName="id_contacto" />
+          <ScalarProperty Name="nombre" ColumnName="nombre" />
+          <ScalarProperty Name="apellido" ColumnName="apellido" />
+          <ScalarProperty Name="id_user" ColumnName="id_user" />
+          <ScalarProperty Name="creation_dt" ColumnName="creation_dt" />
+          <ScalarProperty Name="creation_time" ColumnName="creation_time" />
+          <ScalarProperty Name="telefono" ColumnName="telefono" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="contactoread" FunctionName="directorioModel.Store.contactoread">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="directorioModel.contactoread_Result">
+          <ScalarProperty Name="id_contacto" ColumnName="id_contacto" />
+          <ScalarProperty Name="nombre" ColumnName="nombre" />
+          <ScalarProperty Name="apellido" ColumnName="apellido" />
+          <ScalarProperty Name="id_user" ColumnName="id_user" />
+          <ScalarProperty Name="creation_dt" ColumnName="creation_dt" />
+          <ScalarProperty Name="creation_time" ColumnName="creation_time" />
+          <ScalarProperty Name="telefono" ColumnName="telefono" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+  </EntityContainerMapping>
+</Mapping>
